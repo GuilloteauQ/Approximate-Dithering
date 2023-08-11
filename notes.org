@@ -1,0 +1,17 @@
+#+TITLE: Approximated Dithering
+#+AUTHOR: Quentin Guilloteau
+
+* <2023-08-11 Fri>
+
+ok, it's time to put some idea on the "paper" to not forget them.
+
+there are several things to inverstigate:
+
+- image ratio: width vs height
+  - maybe in some cases it is intersting to skip some error diffusion in some direction
+- ratio of skip lines and columns 
+- try to make the code so that it can be used by snakemake later on
+- if bored, we can try to dither a "video" and use control or something to regulate the speed/quality
+
+
+

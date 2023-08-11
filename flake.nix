@@ -1,21 +1,37 @@
 {
+  description = "A very basic flake";
+
   inputs = {
-    naersk.url = "github:nix-community/naersk/master";
-    nixpkgs.url = "github:NixOS/nixpkgs/23.05";
-    utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/23.05";
   };
 
-  outputs = { self, nixpkgs, utils, naersk }:
-    utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        naersk-lib = pkgs.callPackage naersk { };
-      in
-      {
-        defaultPackage = naersk-lib.buildPackage ./approx_dithering;
-        devShell = with pkgs; mkShell {
-          buildInputs = [ cargo rustc rustfmt pre-commit rustPackages.clippy ];
-          RUST_SRC_PATH = rustPlatform.rustLibSrc;
+  outputs = { self, nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+
+      devShells.${system} = {
+        default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            gcc
+            gnumake
+            linuxKernel.packages.linux_6_1.perf
+            valgrind
+            gdb
+          ];
         };
-      });
+        notes = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            emacs
+          ];
+          shellHook = ''
+            ${pkgs.emacs}/bin/emacs -q -l ./.init.el notes.org
+            exit
+          '';
+        };
+      };
+
+    };
 }
