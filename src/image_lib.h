@@ -14,4 +14,4 @@ void write_image_to_file(Image* image, char* filename);
 
 Image* duplicate(Image* image, size_t iter);
 
-float compute_psnr(Image* image1, Image* image2);
+double compute_psnr(Image* image1, Image* image2);

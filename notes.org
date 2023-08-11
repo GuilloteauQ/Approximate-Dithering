@@ -14,4 +14,13 @@ there are several things to inverstigate:
 - if bored, we can try to dither a "video" and use control or something to regulate the speed/quality
 
 
+Branchless:
+- could have a single cell at pixels[0] to put all the crap
+
+
+-  implement a enum for CLI and each solutions
+- pass an image to compare to ?
+
+
+
 
