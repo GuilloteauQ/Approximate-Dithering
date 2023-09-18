@@ -165,17 +165,17 @@ void propagate_error_branchless_imprecise_approximate(int16_t* data,
                                                       int16_t error,
                                                       size_t x,
                                                       size_t y) {
-    if (!((y % Q == 0) && (x % Q == 0)))
-        return;
-    propagate_error_branchless_imprecise(data, rows, cols, error, x, y);
+    if (((y % Q == 0) && (x % Q == 0))) propagate_error_branchless_imprecise(data, rows, cols, error, x, y);
 }
 
-int16_t update_and_compute_error(int16_t* data, size_t i) {
+inline int16_t update_and_compute_error(int16_t* data, size_t i) {
     int16_t current_value = data[i];
     int16_t new_value = (current_value < 127) ? 0 : 255;
-    *(data + i) = new_value;
+    // int16_t new_value = ((current_value - 127) / 127) * 255;
+    data[i] = new_value;
     return current_value - new_value;
 }
+
 
 void floyd_steinberg_f(int16_t* data, size_t rows, size_t cols, propagate_f f) {
     for (size_t y = 0; y < rows; y++) {

@@ -22,6 +22,11 @@
             gdb
           ];
         };
+        rshell = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            (rWrapper.override{ packages = with rPackages; [ tidyverse ]; })
+          ];
+        };
         notes = pkgs.mkShell {
           buildInputs = with pkgs; [
             emacs

@@ -11,9 +11,9 @@
 #include "strategies.h"
 
 #define SAVE 0
-#define RATIO 1
+#define RATIO 8
 
-#define ITERATIONS 5
+#define ITERATIONS 20
 
 int main(int argc, char** argv) {
     if (argc < 4) {
@@ -42,7 +42,8 @@ int main(int argc, char** argv) {
         floyd_steinberg(approx_image, strategy_f);
         t = clock() - t;
         double time = ((double)t) / CLOCKS_PER_SEC;
-        double psnr = compute_psnr(ref_image, approx_image);
+        // double psnr = compute_psnr(ref_image, approx_image);
+        double psnr = 0.0;
         free(approx_image->pixels);
         free(approx_image);
         printf("%s, %f, %f\n", strategy_name, time, psnr);

@@ -1,9 +1,9 @@
-PROG = make_bin_folder dithering_bw dithering_bw.s
+PROG = make_bin_folder dithering_bw dithering_bw.s pardith
 
 all : $(PROG)
 
 CC        =  gcc
-CFLAGS    =  -Wall -Wextra -O3 -ffast-math
+CFLAGS    =  -Wall -Wextra -O3 -ffast-math -fopenmp -ggdb -lpthread
 LDFLAGS   =  -lm -O3
 SRC_FOLDER = src
 TARGET_FOLDER = bin
@@ -13,6 +13,9 @@ make_bin_folder:
 
 dithering_bw: $(TARGET_FOLDER)/dithering_bw.o $(TARGET_FOLDER)/Util.o $(TARGET_FOLDER)/image_lib.o
 	$(CC) -o $@ $^ $(LDFLAGS)
+
+pardith: $(TARGET_FOLDER)/dithering_omp.o $(TARGET_FOLDER)/Util.o $(TARGET_FOLDER)/image_lib.o
+	$(CC) -o $@ $^ $(LDFLAGS) -fopenmp
 
 dithering_bw.s: $(SRC_FOLDER)/dithering_bw.c
 	$(CC) -S -o $@ $^ $(LDFLAGS)
